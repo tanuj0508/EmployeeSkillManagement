@@ -1,0 +1,109 @@
+﻿@model List<Employee>
+<div class="container mt-3">
+
+    <form id="searchForm" asp-action="Search" method="get" class="mt-5">
+        <div class="input-group">
+            <input type="text" class="form-control" id="searchTerm" name="searchTerm" placeholder="Search...">
+            <div class="input-group-append">
+                <button type="submit" class="btn btn-primary">Search</button>
+            </div>
+        </div>
+
+        <div class="form-check mt-2">
+            <input class="form-check-input" type="radio" name="searchCriteria" id="byName" value="Name" checked>
+            <label class="form-check-label" for="byName">
+                By Name
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="searchCriteria" id="bySkill" value="Skill">
+            <label class="form-check-label" for="bySkill">
+                By Skill
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="searchCriteria" id="byDesignation" value="Designation">
+            <label class="form-check-label" for="byDesignation">
+                By Designation
+            </label>
+        </div>
+    </form>
+
+    <div id="searchResultsContainer" class="mt-4">
+        <!-- Display search results here using the _SearchResults partial view -->
+        @Html.Partial("_SearchResults", Model)
+    </div>
+
+    @* <a href="@Url.Action("ExportToExcel", "Home")" class="btn btn-success mt-2">Generate Report</a> *@
+</div>
+
+
+
+
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('#searchForm').submit(function (event) {
+                event.preventDefault();
+                search();
+            });
+
+            $('#searchTerm').on('input', function () {
+                search();
+            });
+
+            function search() {
+                var searchTerm = $('#searchTerm').val();
+                var searchCriteria = $("input[name='searchCriteria']:checked").val();
+                $.ajax({
+                    url: '/Home/Search',
+                    type: 'GET',
+                    data: { searchTerm: searchTerm, searchCriteria: searchCriteria },
+                    success: function (result) {
+                        console.log(result);
+                        $('#searchResultsContainer').html(result);
+                        var table = $(  '#searchResultsContainer #generate').DataTable({
+                            dom: 'Bfrtip',
+                            buttons: [
+                                'excel'
+                            ],
+                            searching:false
+                        });
+                    },
+                    error: function (error) {
+                        console.log(error);
+                    }
+                });
+            }
+
+            function generateReport() {
+                var searchTerm = $('#searchTerm').val();
+                var searchCriteria = $("input[name='searchCriteria']:checked").val();
+
+                // Create a form element dynamically
+                var form = document.createElement('form');
+                form.action = '/Home/ExportToExcel';
+                form.method = 'get';
+                form.style.display = 'none';
+
+                // Add input fields for the parameters
+                var searchTermInput = document.createElement('input');
+                searchTermInput.type = 'hidden';
+                searchTermInput.name = 'searchTerm';
+                searchTermInput.value = searchTerm;
+                form.appendChild(searchTermInput);
+
+                var searchCriteriaInput = document.createElement('input');
+                searchCriteriaInput.type = 'hidden';
+                searchCriteriaInput.name = 'searchCriteria';
+                searchCriteriaInput.value = searchCriteria;
+                form.appendChild(searchCriteriaInput);
+
+                // Append the form to the body and submit it
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    </script>
+}

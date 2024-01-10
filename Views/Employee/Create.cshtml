@@ -1,0 +1,55 @@
+@model Employee
+<h3 class="text-center mt-3">Add Employee</h3>
+<hr>
+<form method="post">
+    <div class="border p-3 ">
+
+        <div class="row mb-2">
+            <div class="col">
+                <label asp-for="FirstName"></label>
+                <input asp-for="FirstName" class="form-control" />
+                <span asp-validation-for="FirstName" class="text-danger"></span>
+            </div>
+            <div class="col">
+                <label asp-for="LastName"></label>
+                <input asp-for="LastName" class="form-control" />
+                <span asp-validation-for="LastName" class="text-danger"></span>
+            </div>
+        </div>
+
+        <div class="mb-2">
+            <label asp-for="DateOfJoining"></label>
+            <input asp-for="DateOfJoining" class="form-control" />
+            <span asp-validation-for="DateOfJoining" class="text-danger"></span>
+        </div>
+        <div class="mb-2">
+            <label asp-for="Designation"></label>
+            <select asp-for="Designation" class="form-control">
+                <option value="Senior Developer">Senior Developer</option>
+                <option value="Analyst">Analyst</option>
+                <option value="Developer">Developer</option>
+                <option value="Manager">Manager</option>
+                <option value="Senior Manager">Senior Manager</option>
+                <option value="Team Lead">Team Lead</option>
+            </select>
+            <span asp-validation-for="Designation" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Email"></label>
+            <input type="Email" asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-success">Add Employee</button>
+        <a asp-controller="Employee" asp-action="Index" class="btn btn-secondary">
+            Back to List
+        </a>
+    </div>
+
+</form>
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}

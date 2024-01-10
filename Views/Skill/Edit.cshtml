@@ -1,0 +1,18 @@
+@model Skill
+<div style="text-align: center; margin-top:10px; margin-bottom:15px;">
+<h2 >Edit Skill</h2>
+<hr style="display: inline-block; width:25%; border:none; height:1px; margin-top:-5px;">
+</div>
+<div class="container mt-5">
+
+    <form asp-action="Edit" asp-route-id="@Model.Id" method="post" class="mt-4">
+        <div class="form-group mb-3">
+            <label asp-for="SkillName">Skill Name:</label>
+            <input asp-for="SkillName" class="form-control" />
+            <span asp-validation-for="SkillName" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success">Update</button>
+        <a asp-action="Index" asp-controller="Skill" class="btn btn-secondary">Back</a>
+    </form>
+</div>

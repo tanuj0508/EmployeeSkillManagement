@@ -1,0 +1,53 @@
+@model List<Employee>
+<div style="text-align: center; margin-top:10px; margin-bottom:15px;">
+    <h2>Manage Employee</h2>
+    <hr style="display: inline-block; width:33%; border:none; height:1px; margin-top:-5px;">
+</div>
+
+
+
+<table class="table table-bordered  table-striped table-md-10  employeelist" id="myTable">
+    <thead class="thead-dark">
+        <tr>
+            <th>Employee ID</th>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Designation</th>
+            <th>Email</th>
+            <th>DOJ</th>
+            <th>Operations</th>
+            <th>Skills</th> <!-- Add this header for the new column -->
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            int index = 1;
+        }
+        @foreach (var employee in Model)
+        {
+            <tr>
+                <td>@index</td>
+                <td>@employee.FirstName</td>
+                <td>@employee.LastName</td>
+                <td>@employee.Designation</td>
+                <td>@employee.Email</td>
+                <td>@employee.DateOfJoining.ToShortDateString()</td>
+                <td>
+                    <a type="button" class="btn btn-sm btn-warning" asp-area="" asp-controller="Employee"
+                        asp-route-id="@employee.Id" asp-action="Edit"><i class="fas fa-edit"></i>Edit</a>
+                    <a type="button" class="btn btn-sm btn-danger" asp-area="" asp-controller="Employee"
+                        asp-route-id="@employee.Id" asp-action="Delete">Delete</a>
+                </td>
+                <td>
+                    <a type="button" class="btn btn-sm btn-primary" asp-area="" asp-controller="EmployeeSkill"
+                        asp-route-employeeId="@employee.Id" asp-action="AssignSkill">Assign</a>
+                    <a type="button" class="btn btn-sm btn-success" asp-area="" asp-controller="EmployeeSkill"
+                        asp-route-employeeId="@employee.Id" asp-action="ViewSkills">View</a>
+                </td>
+
+            </tr>
+            index++;
+        }
+    </tbody>
+</table>
+<a asp-controller="Employee" asp-action="Create" style="text-decoration: none;" class="btn btn-success">Add Employee</a>

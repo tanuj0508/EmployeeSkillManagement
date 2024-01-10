@@ -1,0 +1,19 @@
+@model Skill
+<div style="text-align: center; margin-top:10px; margin-bottom:15px;">
+<h2 >Create Skills</h2>
+<hr style="display: inline-block; width:28%; border:none; height:1px; margin-top:-5px;">
+</div>
+
+<div class="container mt-3 col-md-10">
+    
+    <form asp-action="Create" method="post" class="mt-4 mb-3">
+        <div class="form-group" style="margin-bottom: 10px;">
+            <label asp-for="SkillName">Skill Name:</label>
+            <input asp-for="SkillName" class="form-control" />
+            <span asp-validation-for="SkillName" class="text-danger"></span>
+        </div>
+        <button type="submit" class="btn btn-success">Create</button>
+        <a asp-action="Index" asp-controller="Skill" class="btn btn-secondary">Back to List</a>
+    </form>
+    
+</div>

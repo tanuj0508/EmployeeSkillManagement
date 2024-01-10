@@ -1,0 +1,30 @@
+@model List<EmployeeSkill>
+
+<div style="text-align: center; margin-top:10px; margin-bottom:15px;">
+    <h2>Employee Skill</h2>
+    <hr style="display: inline-block; width:33%; border:none; height:1px; margin-top:-5px;">
+</div>
+<div class="container mt-3">
+
+    <table class="table table-bordered table-striped" id="myTable">
+        <thead>
+            <tr>
+                <th>Skill Name</th>
+                <th>Rating</th>
+                <th>Year of Experience</th>
+                <!-- Add other columns as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var skill in Model)
+            {
+                <tr>
+                    <td>@skill.Skill.SkillName</td>
+                    <td>@skill.Rating</td>
+                    <td>@skill.YearsOfExperience</td>
+                    <!-- Add other columns as needed -->
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

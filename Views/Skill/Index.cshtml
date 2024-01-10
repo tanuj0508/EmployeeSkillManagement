@@ -1,0 +1,43 @@
+@model List<Skill>
+<div style="text-align: center; margin-top:10px; margin-bottom:15px;">
+<h2 >Manage Skills</h2>
+<hr style="display: inline-block; width:28%; border:none; height:1px; margin-top:-5px;">
+</div>
+
+    @* <h1 class="display-4">Manage Skills</h1> *@
+
+    @* <table class="table mt-4 table table-bordered table-striped" id="myTable"> *@
+            <table class="table table-bordered table-striped " id="myTable" >
+
+        <thead class="thead-dark">
+            <tr>
+                <th>Skill ID</th>
+                <th>Skill Name</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var skill in Model)
+            {
+                <tr>
+                    <td>@skill.Id</td>
+                    <td>@skill.SkillName</td>
+                    <td><a type="button" class="btn btn-warning" asp-area="" asp-controller="Skill"
+                            asp-route-id="@skill.Id" asp-action="Edit">Edit</a>
+                        <a type="button" class="btn btn-danger" asp-area="" asp-controller="Skill"
+                            asp-route-id="@skill.Id" asp-action="Delete">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <a type="button" class="btn btn-success" asp-area="" asp-controller="Skill" asp-action="Create">
+        Add Skills</a>
+
+
+
+
+
+
+

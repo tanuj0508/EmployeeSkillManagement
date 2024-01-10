@@ -1,0 +1,43 @@
+@model EmployeeManagement.Models.LoginViewModel
+@* <img src="~/Content/Images/cglogin.png" class="logo-name me-2" alt="capgemini"> *@
+        
+<body id="login-bg">
+    <div class="login-card p-5 bg-white rounded border shadow-sm  ">
+    <div class="left">
+        <div class="d-flex align-items-center justify-content-center">
+        @* <img src="~/Content/Images/capgemini-logo.png" class="logo-name me-2" alt="capgemini">
+        <img src="~/Content/Images/cg-logo.png" class="logo-icon" alt="capgemini-logo"> *@
+        </div>
+
+        <div class="logo-text">
+           <span> Admin Login</span>
+        </div>
+    </div>
+    <div class="right">
+
+    @* <h4 class="text-uppercase text-center">Admin Login</h4> *@
+    <form asp-action="Login" asp-controller="Account" method="post">
+        <input type="hidden" name="returnUrl" value="@Context.Request.Query["ReturnUrl"]" />
+        <div class="form-group">
+            <label asp-for="Username"></label>
+            <input asp-for="Username" class="form-control" />
+            <small><span asp-validation-for="Username" class="text-danger"></span></small>
+        </div>
+        <div class="form-group" style="margin-bottom:20px ;">
+            <label asp-for="Password"></label>
+            <input asp-for="Password" type="password" class="form-control" />
+            <small><span asp-validation-for="Password" class="text-danger"></span></small>
+        </div>
+        <button type="submit" class="btn btn-primary w-100 ">Login</button>
+    </form>
+    @* <button type="submit" class="btn btn-primary w-100 ">Login</button> *@
+    </div>
+
+</div>
+</body>
+
+@section Scripts{
+    @{
+        <partial name="_ValidationScriptsPartial"/>
+    }
+}

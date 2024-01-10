@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - EmployeeManagement</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootswatchTheme.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/EmployeeManagement.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/DataTables/datatables.min.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/toastr@2.1.4/dist/toastr.min.css">
+
+    <style>
+        /* Additional custom CSS */
+        /* Improved CSS for Side Navigation */
+        .nav-item {
+            padding: 15px 0;
+            margin-bottom: 5px;
+        }
+
+        .nav-link {
+            font-size: 16px;
+            text-align: center;
+            display: block;
+            padding: 12px 20px;
+            border-radius: 8px;
+            transition: background-color 0.3s, color 0.3s, box-shadow 0.3s;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            color: #333;
+            background-color: white;
+        }
+
+        .col-md-2.bg-light {
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .nav-link:hover {
+            background-color: rgb(95, 173, 195);
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Active link style */
+        .nav-link.active {
+            background-color: #007bff;
+            color: #fff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Optional: Add transition effect for active link */
+        .nav-link.active:hover {
+            background-color: #a1caf7;
+        }
+    </style>
+</head>
+
+<body>
+    @if (User.Identity!.IsAuthenticated)
+    {
+        <header>
+
+        </header>
+    }
+    <div class="container-fluid w-100 right-side-content">
+        <div class="row ">
+            @if (User.Identity!.IsAuthenticated)
+            {
+                <button class="toggle-button d-md-none">Toggale</button>
+                <div class="d-none d-md-block col-md-2 toggable-nav navbar-nav flex-column vh-100"
+                    style="background-color: rgb(8, 85, 85); padding: 15px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+                    <ul style="list-style: none; padding: 0;">
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            @* <hr style="border-color: #dee2e6;" /> *@
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Employee" asp-action="Index">Manage
+                                Employees</a>
+                            @* <hr style="border-color: #dee2e6;" /> *@
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Skill" asp-action="Index">Manage
+                                Skills</a>
+                            @* <hr style="border-color: #dee2e6;" /> *@
+                        </li>
+                        <li class="nav-item">
+                            <form method="post" asp-controller="Account" asp-action="Logout">
+                                @Html.AntiForgeryToken()
+                                <button type="submit" class="nav-link w-100">Logout</button>
+                            </form>
+                        </li>
+                    </ul>
+                </div>
+            }
+            <div class="container main-container col-md-10">
+                <main role="main" class="">
+                    @if (User.Identity!.IsAuthenticated)
+                    {
+                        <nav
+                            class="navbar navbar-expand navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow ">
+                            <div class="container-fluid">
+                                <div class="navbar-brand text-center">
+                                    Employee Skills Management
+                                </div>
+                                <div class="row">
+                                    <div class="col-3 border-right text-center ml-3">
+                                        <img style="width:150px;height:46px;" src="~/Content/Images/capgemini-logo.png">
+                                    </div>
+                                </div>
+                            </div>
+                        </nav>
+                    }
+                    <partial name="_Notification"></partial>
+                    @RenderBody()
+                </main>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/DataTables/datatables.min.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/datatables.net-buttons@2.4.2/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdfmake@0.1.53/build/pdfmake.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/pdfmake@0.1.53/build/vfs_fonts.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/datatables.net-buttons@2.4.2/js/buttons.html5.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/datatables.net-buttons@2.4.2/js/buttons.print.min.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        jQuery(document).ready(function () {
+            $(".toggle-button").click(function () {
+                $(".toggable-nav").toggleClass("d-none");
+            })
+        })
+    </script>
+</body>
+
+
+</html>
